@@ -1,0 +1,28 @@
+{
+ "name": "flare",
+
+ "children": [
+  {
+   "name": "flex",
+   "children": [
+    {"name": "FlareVis", "size": 4116},
+    {"name": "GravityForce", "size": 1336}
+   ]
+  },
+  {
+   "name": "vis",
+   "children": [
+    {"name": "DragForce", "size": 1082},
+    {"name": "GravityForce", "size": 1336}
+   ]
+  },
+  {
+    "name":"empty",
+    "children": [
+      {
+        "name": "one", "size": 1200
+      }
+    ]
+  }
+ ]
+}

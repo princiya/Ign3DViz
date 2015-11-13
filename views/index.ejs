@@ -1,0 +1,59 @@
+
+<html>
+	<meta charset="utf-8">
+	<head>
+		<title>Ignition Transport Library</title>
+		<script src="/scripts/jquery.min.js" type="text/javascript"></script>
+		<script src="/scripts/d3.v3.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+	</head>
+	<body>
+		<p id="para"></p>
+		<script>
+
+			var diameter = 960,
+			    format = d3.format(",d");
+
+			var pack = d3.layout.pack()
+			    .size([diameter - 4, diameter - 4])
+			    .value(function(d) { return d.size; });
+
+			var svg = d3.select("body").append("svg")
+			    		.attr("width", diameter)
+			    		.attr("height", diameter)
+			  			.append("g")
+			    		.attr("transform", "translate(2,2)");
+
+			//console.log(pack);
+			//document.getElementById("para").innerHTML = pack;
+
+			$.ajax({ 
+			   url: '/jsonOutput',
+			   success: function(data){
+				   var node = svg.datum(data).selectAll(".node")
+					      		.data(pack.nodes)
+					    		.enter().append("g")
+					      		.attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+					      		.attr("transform", function(d) { 
+					      								//alert("Name: "+d.name+" X: "+d.x+" R: "+d.r+" Value: "+d.value+" Parent: "+d.parent+" Depth: "+d.depth+" Size: "+d.size); 
+					      								return "translate(" + d.x + "," + d.y + ")"; 
+					      							});
+
+					  node.append("title")
+					      .text(function(d) { return d.name + (d.children ? "" : ": " + format(d.size)); });
+
+					  node.append("circle")
+					      .attr("r", function(d) { return d.r; });
+
+					  node.filter(function(d) { return !d.children; }).append("text")
+					      .attr("dy", ".3em")
+					      .style("text-anchor", "middle")
+					      .text(function(d) { return d.name.substring(0, d.r / 3); });
+			   }
+			});
+			
+			d3.select(self.frameElement).style("height", diameter + "px");
+
+		</script>
+	</body>
+</html>

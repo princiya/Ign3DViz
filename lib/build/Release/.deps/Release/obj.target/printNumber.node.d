@@ -1,0 +1,1 @@
+cmd_Release/obj.target/printNumber.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=printNumber.node -o Release/obj.target/printNumber.node -Wl,--start-group Release/obj.target/printNumber/printNumber.o -Wl,--end-group 
