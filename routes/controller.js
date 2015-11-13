@@ -1,5 +1,5 @@
-//var print = require('./lib/build/Release/printNumber.node')
-//	;
+var print = require('../lib/build/Release/printNumber.node')
+	;
 
 module.exports = {
 	index: function(req, res) {
