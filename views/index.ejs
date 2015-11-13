@@ -8,10 +8,34 @@
 		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
 	</head>
 	<body>
-		<p id="para"></p>
+		<div class="right">
+			
+		</div>
+
+		<div class="left">
+
+		</div>
+
 		<script>
 
-			var diameter = 660,
+			var timer1 = 0;
+			function printRecursive(n) {
+				if(n == 0) 
+					return;
+				clearTimeout(timer1);
+				timer1 = setTimeout(function() {
+					$.ajax({ 
+						url: '/printNumber/'+(n*50),
+						success: function(data) {
+							$('.right').append(""+data+"");
+							printRecursive(--n);
+						}
+					});
+				}, 3000);
+			}
+			printRecursive(10);
+
+			var diameter = 550,
 			    format = d3.format(",d");
 
 			var pack = d3.layout.pack()
@@ -45,7 +69,7 @@
 							var length = root.children[topic].children.length;
 
 							root.children[topic].children[length] = data;
-							$("body").empty();
+							$(".left").empty();
 							draw();
 							drawRecursive(--n);
 						}
@@ -54,7 +78,7 @@
 			}
 
 			function draw() {
-				var svg = d3.select("body").append("svg")
+				var svg = d3.select(".left").append("svg")
 			    		.attr("width", diameter)
 			    		.attr("height", diameter)
 			  			.append("g")

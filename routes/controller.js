@@ -50,5 +50,10 @@ module.exports = {
 		}
 
 		res.json(node);
+	},
+
+	printNumber: function(req, res) {
+		var val = req.params['val'];
+		res.render('printNumber', {val: print.Print(val)});
 	}
 }
