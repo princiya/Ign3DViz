@@ -46,7 +46,7 @@ module.exports = {
 
 		var node = {
 			name: "Node"+val,
-			size: 1200
+			size: 800*val
 		}
 
 		res.json(node);

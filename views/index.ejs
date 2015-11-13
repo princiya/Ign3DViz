@@ -18,52 +18,48 @@
 			    .size([diameter - 4, diameter - 4])
 			    .value(function(d) { return d.size; });
 
-			var svg = d3.select("body").append("svg")
-			    		.attr("width", diameter)
-			    		.attr("height", diameter)
-			  			.append("g")
-			    		.attr("transform", "translate(2,2)");
-
-			//console.log(pack);
-			//document.getElementById("para").innerHTML = pack;
 			var root = {};
 
 			$.ajax({ 
 			   url: '/jsonOutput',
 			   success: function(data){
 				   root = data;
-				   $.ajax({ 
-						url: '/jsonOutput/1',
-						success: function(data) {
-							var topic = 1;
-							var length = root.children[topic].children.length;
-
-							root.children[topic].children[length] = data;
-							console.log(root.children[topic].children);
-							draw();
-						}
-					});
-				   //draw();
+				   draw();
+				   drawRecursive(5);
 			   }
 			});
 			
 			d3.select(self.frameElement).style("height", diameter + "px");
 
-			/*setTimeout(function() {
-				var topic = 1;
-				$.ajax({ 
-					url: '/jsonOutput/'+topic,
-					success: function(data) {
-						var length = root.children[topic].children.length;
+			var timer = 0;
 
-						root.children[topic].children[length] = data;
-						console.log(root.children[topic].children);
-						draw();
-					}
-				});
-			}, 3000);*/
+			function drawRecursive(n) {
+				if(n == 0) 
+					return;
+				clearTimeout(timer);
+				timer = setTimeout(function() {
+					var topic = n % 3;
+					$.ajax({ 
+						url: '/jsonOutput/'+n,
+						success: function(data) {
+							var length = root.children[topic].children.length;
+
+							root.children[topic].children[length] = data;
+							$("body").empty();
+							draw();
+							drawRecursive(--n);
+						}
+					});
+				}, 3000);
+			}
 
 			function draw() {
+				var svg = d3.select("body").append("svg")
+			    		.attr("width", diameter)
+			    		.attr("height", diameter)
+			  			.append("g")
+			    		.attr("transform", "translate(2,2)");
+
 				var node = svg.datum(root).selectAll(".node")
 					      		.data(pack.nodes)
 					    		.enter().append("g")
