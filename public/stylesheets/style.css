@@ -19,6 +19,26 @@ circle {
   fill-opacity: 1;
 }
 
+.leaf.Node1 circle{
+	fill: #ff7f0e;
+}
+
+.leaf.Node2 circle{
+	fill: green;
+}
+
+.leaf.Node3 circle{
+	fill: yellow;
+}
+
+.leaf.Node4 circle{
+	fill: brown;
+}
+
+.leaf.Node5 circle{
+	fill: magenta;
+}
+
 text {
   font: 10px sans-serif;
 }

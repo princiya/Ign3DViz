@@ -6,11 +6,11 @@
 
 ## Usage
 
-
+This is to visualize network topology for [ign-transport library](http://ignition-transport.readthedocs.org/en/latest/introduction/intro.html).
 
 ## Developing
 
-
+This is a Node.js project. 
 
 ### Tools
 

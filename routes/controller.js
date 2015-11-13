@@ -8,33 +8,47 @@ module.exports = {
 
 	jsonOutput: function(req, res) {
 		var root = {
-			name: "flare",
+			name: "Publisher",
 
 			 children: [
 			  {
-			   name: "flex",
+			   name: "Topic1",
 			   children: [
-			    {name: "FlareVis", "size": 4116},
-			    {name: "GravityForce", "size": 1336}
+			    {name: "Node1", "size": 4116},
+			    {name: "Node2", "size": 1336}
 			   ]
 			  },
 			  {
-			   name: "vis",
+			   name: "Topic2",
 			   children: [
-			    {name: "DragForce", "size": 1082},
-			    {name: "GravityForce", "size": 1336}
+			    {name: "Node1", "size": 4116},
+			    {name: "Node3", "size": 1336}
 			   ]
 			  },
 			  {
-			    name:"empty",
-			    children: [
-			      {
-			        name: "one", "size": 1200
-			      }
-			    ]
-			  }
+			   name: "Topic3",
+			   children: [
+			    {name: "Node5", "size": 4116},
+			    {name: "Node2", "size": 1336},
+			    {name: "Node4", "size": 1336},
+			    {name: "Node1", "size": 2336}
+			   ]
+			  },
 			 ]
 		};
 		res.json(root);
+	},
+
+	jsonOutputParams: function(req, res) {
+		var colors = ['red', 'green', 'yellow', 'magenta', 'brown'];
+
+		var val = req.params['val'];
+
+		var node = {
+			name: "Node"+val,
+			size: 1200
+		}
+
+		res.json(node);
 	}
 }

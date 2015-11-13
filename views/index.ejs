@@ -11,7 +11,7 @@
 		<p id="para"></p>
 		<script>
 
-			var diameter = 960,
+			var diameter = 660,
 			    format = d3.format(",d");
 
 			var pack = d3.layout.pack()
@@ -26,14 +26,48 @@
 
 			//console.log(pack);
 			//document.getElementById("para").innerHTML = pack;
+			var root = {};
 
 			$.ajax({ 
 			   url: '/jsonOutput',
 			   success: function(data){
-				   var node = svg.datum(data).selectAll(".node")
+				   root = data;
+				   $.ajax({ 
+						url: '/jsonOutput/1',
+						success: function(data) {
+							var topic = 1;
+							var length = root.children[topic].children.length;
+
+							root.children[topic].children[length] = data;
+							console.log(root.children[topic].children);
+							draw();
+						}
+					});
+				   //draw();
+			   }
+			});
+			
+			d3.select(self.frameElement).style("height", diameter + "px");
+
+			/*setTimeout(function() {
+				var topic = 1;
+				$.ajax({ 
+					url: '/jsonOutput/'+topic,
+					success: function(data) {
+						var length = root.children[topic].children.length;
+
+						root.children[topic].children[length] = data;
+						console.log(root.children[topic].children);
+						draw();
+					}
+				});
+			}, 3000);*/
+
+			function draw() {
+				var node = svg.datum(root).selectAll(".node")
 					      		.data(pack.nodes)
 					    		.enter().append("g")
-					      		.attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+					      		.attr("class", function(d) { return d.children ? "node" : "leaf node "+d.name; })
 					      		.attr("transform", function(d) { 
 					      								//alert("Name: "+d.name+" X: "+d.x+" R: "+d.r+" Value: "+d.value+" Parent: "+d.parent+" Depth: "+d.depth+" Size: "+d.size); 
 					      								return "translate(" + d.x + "," + d.y + ")"; 
@@ -49,10 +83,7 @@
 					      .attr("dy", ".3em")
 					      .style("text-anchor", "middle")
 					      .text(function(d) { return d.name.substring(0, d.r / 3); });
-			   }
-			});
-			
-			d3.select(self.frameElement).style("height", diameter + "px");
+			}
 
 		</script>
 	</body>

@@ -7,4 +7,6 @@ router.get('/', controller.index);
 
 router.get('/jsonOutput', controller.jsonOutput);
 
+router.get('/jsonOutput/:val', controller.jsonOutputParams);
+
 module.exports = router;
